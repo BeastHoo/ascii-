@@ -5,6 +5,7 @@ import gnu.io.SerialPort;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.Socket;
 
 public class SsListener implements ActionListener {
     private JButton jButton;
@@ -20,8 +21,8 @@ public class SsListener implements ActionListener {
         return ioOperate;
     }
 
-    public void setSerialPort(SerialPort serialPort) {
-        ioOperate=new IOOperate(serialPort,functionPanel);
+    public void setSocket(Socket socket) {
+        ioOperate=new IOOperate(socket,functionPanel,socket.getInetAddress().toString(),socket.getPort());
     }
 
     @Override

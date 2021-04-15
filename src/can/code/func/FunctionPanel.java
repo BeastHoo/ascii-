@@ -4,13 +4,14 @@ import can.code.startFrame;
 import gnu.io.SerialPort;
 import javax.swing.*;
 import java.awt.*;
+import java.net.Socket;
 
 public class FunctionPanel extends JPanel {
     private JCheckBox speedMode;
     private JCheckBox angleMode;
     private static boolean checkFlag;
     private startFrame sF;
-    private SerialPort serialPort;
+    private Socket socket;
 
     //方位角模式变量
     private JButton rightMove;
@@ -49,13 +50,14 @@ public class FunctionPanel extends JPanel {
         DefaultSpeed=10;
     }
 
-    public void setSerialPort(SerialPort serialPort) {
-        this.serialPort = serialPort;
+    public void setSerialPort(Socket socket) {
+        this.socket = socket;
         defaultEnabled();
-        ssListener.setSerialPort(serialPort);
+        ssListener.setSocket(socket);
         ioOperate=ssListener.getIoOperate();
         leftListener.setIoOperate(ioOperate);
         rightListener.setIoOperate(ioOperate);
+        ioOperate.setErrorInfoPanel(sF.getErrorInfoPanel());
     }
 
     public FunctionPanel(startFrame sF)
@@ -238,7 +240,7 @@ public class FunctionPanel extends JPanel {
         CurSpeed.setFont(new Font("黑体",Font.PLAIN,16));
         CurSpeed.setBounds(180,350,90,40);
         speed.setEditable(false);
-        speed.setBounds(270,360,50,20);
+        speed.setBounds(250,360,80,20);
         speed.setColumns(5);
         speed.setRows(1);
         speed.setFont(new Font("黑体",Font.PLAIN,16));
@@ -320,13 +322,23 @@ public class FunctionPanel extends JPanel {
     }
 
     public  void setCurVal(String defaultAngle,String defaultSpeed) {
-        angle.setText(defaultAngle);
-        speed.setText(defaultSpeed);
+        if(defaultAngle==null)
+        {
+            speed.setText(defaultSpeed.substring(0,7));
+        }else if(defaultSpeed==null)
+        {
+            angle.setText(defaultAngle);
+        }
+        else {
+            speed.setText(defaultSpeed.substring(0,7));
+            angle.setText(defaultAngle);
+        }
+
     }
 
     private void defaultEnabled()
     {
-        if(serialPort==null)
+        if(socket==null)
         {
              speedMode.setEnabled(false);
              angleMode.setEnabled(false);

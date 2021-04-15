@@ -262,7 +262,7 @@ public class SerialPortGSPanel extends JPanel implements ActionListener {
                 /*FunctionFrame functionFrame =new FunctionFrame(serialPort);
                 jf.dispose();
                 functionFrame.show();*/
-                sF.setSerialPort(serialPort);
+//                sF.setSerialPort();
             } catch (UnsupportedCommOperationException unsupportedCommOperationException) {
                 unsupportedCommOperationException.printStackTrace();
                 if(serialPort==null)

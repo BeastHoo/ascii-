@@ -24,7 +24,7 @@ public class FlushListener implements ActionListener {
         {
             serialPort.close();
             serialPortGSPanel.setSerialPort(null);
-            sF.setSerialPort(null);
+            sF.setSocket(null);
         }
         List<String> list=serialPortGSPanel.getPortName();
         serialPortGSPanel.getportName().removeAllItems();
